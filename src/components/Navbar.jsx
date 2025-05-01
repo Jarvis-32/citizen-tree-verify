@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from "@/components/ui/button.tsx";
 
 const Navbar = () => {
   return (
@@ -18,15 +17,15 @@ const Navbar = () => {
         </Link>
         
         <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-          <Button asChild variant="ghost" className="text-white hover:bg-blue-700">
-            <Link to="/register">Register</Link>
-          </Button>
-          <Button asChild variant="ghost" className="text-white hover:bg-blue-700">
-            <Link to="/family-tree">Family Tree</Link>
-          </Button>
-          <Button asChild variant="ghost" className="text-white hover:bg-blue-700">
-            <Link to="/admin">Admin</Link>
-          </Button>
+          <Link to="/register" className="px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+            Register
+          </Link>
+          <Link to="/family-tree" className="px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+            Family Tree
+          </Link>
+          <Link to="/admin" className="px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+            Admin
+          </Link>
         </div>
       </div>
     </nav>
