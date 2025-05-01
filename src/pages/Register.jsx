@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { mockAadhaarData } from '../services/mockData';
+import { mockAadhaarData } from '../services/mockData.jsx';
 import StatusBadge from '../components/StatusBadge';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
