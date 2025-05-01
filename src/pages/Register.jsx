@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { mockAadhaarData } from '../services/mockData.jsx';
 import StatusBadge from '../components/StatusBadge';
 import { useToast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
