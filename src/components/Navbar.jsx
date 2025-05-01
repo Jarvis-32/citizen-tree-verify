@@ -13,14 +13,14 @@ const Navbar = () => {
               <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
               <line x1="4" y1="22" x2="4" y2="15"></line>
             </svg>
-            <span>Aadhaar Portal</span>
+            <span className="animate-fade-in">Aadhaar Portal</span>
           </div>
         </Link>
         
         <div className="flex flex-wrap justify-center gap-2 md:gap-4">
           <Link to="/register">
             <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300"
+              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
               variant="default"
             >
               Register
@@ -28,7 +28,7 @@ const Navbar = () => {
           </Link>
           <Link to="/family-tree">
             <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300"
+              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
               variant="default"
             >
               Family Tree
@@ -36,7 +36,7 @@ const Navbar = () => {
           </Link>
           <Link to="/admin">
             <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300"
+              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
               variant="default"
             >
               Admin
