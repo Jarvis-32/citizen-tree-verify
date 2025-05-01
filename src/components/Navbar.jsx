@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="flex flex-wrap justify-center gap-2 md:gap-4">
           <Link to="/register">
             <Button 
-              className="bg-[#2264d1] hover:bg-blue-700 text-white font-medium px-6 py-2"
+              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300"
               variant="default"
             >
               Register
@@ -28,7 +28,7 @@ const Navbar = () => {
           </Link>
           <Link to="/family-tree">
             <Button 
-              className="bg-[#2264d1] hover:bg-blue-700 text-white font-medium px-6 py-2"
+              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300"
               variant="default"
             >
               Family Tree
@@ -36,7 +36,7 @@ const Navbar = () => {
           </Link>
           <Link to="/admin">
             <Button 
-              className="bg-[#2264d1] hover:bg-blue-700 text-white font-medium px-6 py-2"
+              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300"
               variant="default"
             >
               Admin

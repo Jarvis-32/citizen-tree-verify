@@ -13,12 +13,12 @@ const Index = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/register">
-              <Button className="btn btn-accent">
+              <Button className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-6 py-2 rounded-full shadow-md transition-all duration-300">
                 Get Started
               </Button>
             </Link>
             <Link to="/family-tree">
-              <Button className="bg-white text-aadhaar-primary hover:bg-gray-100">
+              <Button className="bg-white text-indigo-700 hover:bg-gray-100 font-medium px-6 py-2 rounded-full shadow-md border border-indigo-200 transition-all duration-300">
                 View Family Tree
               </Button>
             </Link>
