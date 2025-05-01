@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button.tsx';
 
 const Index = () => {
   return (
@@ -11,11 +12,15 @@ const Index = () => {
             Complete your Aadhaar verification and build your family tree in one place
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link to="/register" className="btn btn-accent">
-              Get Started
+            <Link to="/register">
+              <Button className="btn btn-accent">
+                Get Started
+              </Button>
             </Link>
-            <Link to="/family-tree" className="btn bg-white text-aadhaar-primary hover:bg-gray-100">
-              View Family Tree
+            <Link to="/family-tree">
+              <Button className="bg-white text-aadhaar-primary hover:bg-gray-100">
+                View Family Tree
+              </Button>
             </Link>
           </div>
         </div>
