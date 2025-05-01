@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { mockAadhaarData } from '../services/mockData';
 import StatusBadge from '../components/StatusBadge';
 import { useToast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 type VerificationStatus = 'Verified' | 'Pending' | 'Rejected';
 
@@ -22,6 +25,7 @@ const Register = () => {
   const [verificationStatus, setVerificationStatus] = useState<VerificationStatus | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedUserData, setEditedUserData] = useState<UserData | null>(null);
+  const [isNewRegistration, setIsNewRegistration] = useState(false);
   const { toast } = useToast();
 
   const handleAadhaarSubmit = (e: React.FormEvent) => {
@@ -47,17 +51,36 @@ const Register = () => {
       setUserData(result);
       setEditedUserData(result);
       setVerificationStatus('Verified');
+      setIsNewRegistration(false);
       toast({
         title: "Aadhaar Verified",
         description: "Your identity has been verified successfully"
       });
     } else {
-      setUserData(null);
-      setVerificationStatus(null);
+      // Allow new registration
+      setIsNewRegistration(true);
+      setUserData({
+        aadhaarNumber: formatAadhaar(formattedAadhaar),
+        name: '',
+        dateOfBirth: '',
+        gender: 'Male',
+        address: '',
+        phone: '',
+        email: ''
+      });
+      setEditedUserData({
+        aadhaarNumber: formatAadhaar(formattedAadhaar),
+        name: '',
+        dateOfBirth: '',
+        gender: 'Male',
+        address: '',
+        phone: '',
+        email: ''
+      });
+      setVerificationStatus('Pending');
       toast({
-        variant: "destructive",
-        title: "Verification Failed",
-        description: "No records found for the provided Aadhaar number"
+        title: "New Registration",
+        description: "Please complete your registration details"
       });
     }
   };
@@ -67,20 +90,38 @@ const Register = () => {
   };
   
   const handleSaveClick = () => {
+    // Validate that all required fields are filled in
+    if (!editedUserData?.name || !editedUserData?.dateOfBirth || 
+        !editedUserData?.address || !editedUserData?.phone || !editedUserData?.email) {
+      toast({
+        variant: "destructive",
+        title: "Incomplete Information",
+        description: "Please fill in all required fields"
+      });
+      return;
+    }
+
     setIsEditing(false);
     setVerificationStatus('Pending');
     toast({
-      title: "Changes Submitted",
-      description: "Your changes are pending verification by an admin"
+      title: isNewRegistration ? "Registration Submitted" : "Changes Submitted",
+      description: "Your information is pending verification by an admin"
     });
   };
   
   const handleCancelClick = () => {
     setIsEditing(false);
-    setEditedUserData(userData);
+    if (isNewRegistration) {
+      setUserData(null);
+      setEditedUserData(null);
+      setVerificationStatus(null);
+      setIsNewRegistration(false);
+    } else {
+      setEditedUserData(userData);
+    }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     if (editedUserData) {
       setEditedUserData({
         ...editedUserData,
@@ -103,47 +144,50 @@ const Register = () => {
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-center text-aadhaar-primary">Aadhaar Registration</h1>
         
-        <div className="card mb-8">
-          <h2 className="text-xl font-semibold mb-4">Verify Aadhaar</h2>
-          <form onSubmit={handleAadhaarSubmit}>
-            <div className="mb-4">
-              <label htmlFor="aadhaar" className="block text-sm font-medium mb-1">
-                Aadhaar Number (12 digits)
-              </label>
-              <div className="flex">
-                <input
-                  id="aadhaar"
-                  type="text"
-                  className="input-field flex-grow"
-                  placeholder="XXXX XXXX XXXX"
-                  value={aadhaarNumber}
-                  onChange={(e) => setAadhaarNumber(formatAadhaar(e.target.value))}
-                  maxLength={14}
-                />
-                <button type="submit" className="btn btn-primary ml-2">
-                  Verify
-                </button>
+        {!userData && (
+          <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-4">Verify Aadhaar</h2>
+            <form onSubmit={handleAadhaarSubmit}>
+              <div className="mb-4">
+                <label htmlFor="aadhaar" className="block text-sm font-medium mb-1">
+                  Aadhaar Number (12 digits)
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    id="aadhaar"
+                    type="text"
+                    placeholder="XXXX XXXX XXXX"
+                    value={aadhaarNumber}
+                    onChange={(e) => setAadhaarNumber(formatAadhaar(e.target.value))}
+                    maxLength={14}
+                    className="flex-grow"
+                  />
+                  <Button type="submit">
+                    Verify
+                  </Button>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  For testing, use: 1234 5678 9012, 2345 6789 0123, or enter any new 12-digit number to register
+                </p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">
-                For testing, use: 1234 5678 9012, 2345 6789 0123, etc.
-              </p>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+        )}
 
         {userData && (
-          <div className="card">
+          <div className="bg-white shadow-md rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold">User Information</h2>
-              <div className="flex items-center">
+              <h2 className="text-xl font-semibold">{isNewRegistration ? "New Registration" : "User Information"}</h2>
+              <div className="flex items-center gap-2">
                 {verificationStatus && <StatusBadge status={verificationStatus} />}
                 {!isEditing && verificationStatus === 'Verified' && (
-                  <button 
+                  <Button 
                     onClick={handleEditClick}
-                    className="btn btn-secondary ml-2 text-sm"
+                    variant="outline"
+                    size="sm"
                   >
                     Edit Info
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
@@ -152,46 +196,49 @@ const Register = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Aadhaar Number</label>
-                  <input
+                  <Input
                     type="text"
-                    className="input-field bg-gray-100"
                     value={editedUserData?.aadhaarNumber}
+                    className="bg-gray-100"
                     disabled
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Full Name</label>
-                  <input
+                  <label className="block text-sm font-medium mb-1">Full Name*</label>
+                  <Input
                     type="text"
                     name="name"
-                    className={`input-field ${isEditing ? '' : 'bg-gray-100'}`}
                     value={editedUserData?.name}
                     onChange={handleInputChange}
-                    disabled={!isEditing}
+                    disabled={!isEditing && !isNewRegistration}
+                    className={!isEditing && !isNewRegistration ? "bg-gray-100" : ""}
+                    required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Date of Birth</label>
-                  <input
+                  <label className="block text-sm font-medium mb-1">Date of Birth*</label>
+                  <Input
                     type="date"
                     name="dateOfBirth"
-                    className={`input-field ${isEditing ? '' : 'bg-gray-100'}`}
                     value={editedUserData?.dateOfBirth}
                     onChange={handleInputChange}
-                    disabled={!isEditing}
+                    disabled={!isEditing && !isNewRegistration}
+                    className={!isEditing && !isNewRegistration ? "bg-gray-100" : ""}
+                    required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Gender</label>
+                  <label className="block text-sm font-medium mb-1">Gender*</label>
                   <select
                     name="gender"
-                    className={`input-field ${isEditing ? '' : 'bg-gray-100'}`}
                     value={editedUserData?.gender}
                     onChange={handleInputChange}
-                    disabled={!isEditing}
+                    disabled={!isEditing && !isNewRegistration}
+                    className={`flex h-10 w-full rounded-md border border-input px-3 py-2 text-base md:text-sm ${!isEditing && !isNewRegistration ? "bg-gray-100" : "bg-background"}`}
+                    required
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -200,56 +247,58 @@ const Register = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium mb-1">Address</label>
-                  <input
-                    type="text"
+                  <label className="block text-sm font-medium mb-1">Address*</label>
+                  <Textarea
                     name="address"
-                    className={`input-field ${isEditing ? '' : 'bg-gray-100'}`}
                     value={editedUserData?.address}
                     onChange={handleInputChange}
-                    disabled={!isEditing}
+                    disabled={!isEditing && !isNewRegistration}
+                    className={!isEditing && !isNewRegistration ? "bg-gray-100" : ""}
+                    required
+                    rows={2}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Phone Number</label>
-                  <input
-                    type="text"
+                  <label className="block text-sm font-medium mb-1">Phone Number*</label>
+                  <Input
+                    type="tel"
                     name="phone"
-                    className={`input-field ${isEditing ? '' : 'bg-gray-100'}`}
                     value={editedUserData?.phone}
                     onChange={handleInputChange}
-                    disabled={!isEditing}
+                    disabled={!isEditing && !isNewRegistration}
+                    className={!isEditing && !isNewRegistration ? "bg-gray-100" : ""}
+                    required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Email</label>
-                  <input
+                  <label className="block text-sm font-medium mb-1">Email*</label>
+                  <Input
                     type="email"
                     name="email"
-                    className={`input-field ${isEditing ? '' : 'bg-gray-100'}`}
                     value={editedUserData?.email}
                     onChange={handleInputChange}
-                    disabled={!isEditing}
+                    disabled={!isEditing && !isNewRegistration}
+                    className={!isEditing && !isNewRegistration ? "bg-gray-100" : ""}
+                    required
                   />
                 </div>
               </div>
 
-              {isEditing && (
+              {(isEditing || isNewRegistration) && (
                 <div className="flex justify-end space-x-2 mt-4">
-                  <button
+                  <Button
                     onClick={handleCancelClick}
-                    className="btn btn-secondary"
+                    variant="outline"
                   >
                     Cancel
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={handleSaveClick}
-                    className="btn btn-primary"
                   >
-                    Save Changes
-                  </button>
+                    {isNewRegistration ? "Register" : "Save Changes"}
+                  </Button>
                 </div>
               )}
             </div>
