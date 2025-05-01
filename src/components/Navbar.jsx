@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button.tsx';
 
 const Navbar = () => {
   return (
@@ -13,34 +12,19 @@ const Navbar = () => {
               <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
               <line x1="4" y1="22" x2="4" y2="15"></line>
             </svg>
-            <span className="animate-fade-in">Aadhaar Portal</span>
+            <span>Aadhaar Portal</span>
           </div>
         </Link>
         
         <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-          <Link to="/register">
-            <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
-              variant="default"
-            >
-              Register
-            </Button>
+          <Link to="/register" className="px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+            Register
           </Link>
-          <Link to="/family-tree">
-            <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
-              variant="default"
-            >
-              Family Tree
-            </Button>
+          <Link to="/family-tree" className="px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+            Family Tree
           </Link>
-          <Link to="/admin">
-            <Button 
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white font-medium px-5 py-1.5 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
-              variant="default"
-            >
-              Admin
-            </Button>
+          <Link to="/admin" className="px-3 py-2 rounded hover:bg-blue-700 transition-colors">
+            Admin
           </Link>
         </div>
       </div>
