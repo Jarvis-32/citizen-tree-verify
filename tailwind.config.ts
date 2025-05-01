@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,22 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				aadhaar: {
+					primary: '#0066cc',
+					secondary: '#e9f0f7',
+					accent: '#ff6b35',
+					success: '#22c55e',
+					pending: '#f59e0b',
+					rejected: '#ef4444',
+					light: '#ffffff',
+					dark: '#333333',
+					muted: '#f3f4f6'
 				}
+			},
+			fontFamily: {
+				roboto: ['Roboto', 'sans-serif'],
+				opensans: ['Open Sans', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
